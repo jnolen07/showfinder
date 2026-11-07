@@ -58,6 +58,11 @@ function Site({ watchlist }) {
   const [showIntro, setShowIntro] = useState(() => parseHash().page !== 'title')
   const [serviceIds, setServiceIds] = useState(() => load('services', []).filter((id) => SERVICES.some((s) => s.id === id)))
   const [onboarded, setOnboarded] = useState(() => load('onboarded', false))
+  const [genres, setGenresState] = useState(() => load('genres', [])) // favorite genres (genre-button IDs)
+  const setGenres = (g) => {
+    setGenresState(g)
+    save('genres', g)
+  }
   const [editingServices, setEditingServices] = useState(false)
   const [keyOk, setKeyOk] = useState(null) // null = still checking the connection to TMDB
   const [region] = useState(() => load('region', guessRegion()))
@@ -181,6 +186,8 @@ function Site({ watchlist }) {
       <SeenStep
         library={library}
         onRate={rate}
+        genres={genres}
+        onGenres={setGenres}
         onDone={() => {
           setOnboarded(true)
           save('onboarded', true)
@@ -205,7 +212,16 @@ function Site({ watchlist }) {
 
       <div className="flex-1">
       {route.page === 'home' && (
-        <ForYou library={library} onRate={rate} region={region} serviceIds={serviceIds} onSelect={openSheet} goSearch={() => go('#/search')} />
+        <ForYou
+          library={library}
+          onRate={rate}
+          region={region}
+          serviceIds={serviceIds}
+          onSelect={openSheet}
+          goSearch={() => go('#/search')}
+          genres={genres}
+          onGenres={setGenres}
+        />
       )}
       {route.page === 'search' && (
         <main className="mx-auto max-w-6xl px-4 pb-16">

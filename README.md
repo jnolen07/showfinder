@@ -11,9 +11,11 @@ you pay for** first, so you don't have to sign up for anything new.
    "Continue to my picks"; "New here? Start fresh" lets someone else set it up on the same device.
 2. **Pick your services**: the top 10 (Netflix, Prime Video, Disney+, HBO Max, Hulu,
    Peacock, Paramount+, Apple TV, Crunchyroll, Tubi) with their real logos. Select as many as you use.
-3. **What have you watched?**: search shows/movies and rate them ❤️ Loved / 👍 Liked / 👎 Not for me.
-4. **Picks for you**: recommendations blended from everything you loved/liked, with
-   *On your services* first. Each card says which service it's on and which of your shows it's like.
+3. **What have you watched?**: search shows/movies, or tap genres (Comedy, Action, Crime…) to see
+   popular ones, and rate them ❤️ Loved / 👍 Liked / 👎 Not for me. Picked genres are saved as your taste.
+4. **Picks for you**: close matches blended from everything you loved/liked (each card says which
+   service it's on and which of your shows it's like), plus **Popular on your services** in your
+   genres, so the page is full even after rating one title. Genre buttons are on this page too.
 5. **Tap any poster** for details and **Where to watch**: every option grouped as *On your
    services*, *Stream*, *Free*, and *Rent or buy*. Tap a service to open the title there
    (it opens that service's search for the title; unknown services go to TMDB's full list).

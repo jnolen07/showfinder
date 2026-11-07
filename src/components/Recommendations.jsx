@@ -4,6 +4,8 @@ import { RATINGS, keyOf, pickDisliked } from '../library.js'
 import TitleCard, { Grid, Skeleton } from './TitleCard.jsx'
 import WhereToWatch from './WhereToWatch.jsx'
 import { ShareButton, WatchlistButton } from './TitleActions.jsx'
+import PopularOnServices from './PopularOnServices.jsx'
+import { chipsFor, specific } from '../genres.js'
 import KindFilter from './KindFilter.jsx'
 import { Collapsible, ErrorNote, SectionTitle } from './Section.jsx'
 import { ArrowLeft, ChevronDown } from 'lucide-react'
@@ -117,6 +119,19 @@ export default function Recommendations({ seed, region, serviceIds, library, onR
               </Collapsible>
             )}
           </>
+        )}
+        {!state.loading && !state.error && state.seed && (
+          <PopularOnServices
+            title="More on your services"
+            genres={specific(chipsFor((state.seed.genres || []).map((g) => g.id))).slice(0, 3)}
+            region={region}
+            serviceIds={serviceIds}
+            library={library}
+            exclude={new Set([keyOf(seed), ...onYours.map(keyOf)])}
+            kind={kind}
+            onSelect={onSelect}
+            onRate={onRate}
+          />
         )}
         <p className="mt-12 text-sm text-zinc-500">Tip: tap any poster to see where to watch it, or “More like this” to keep going.</p>
       </div>

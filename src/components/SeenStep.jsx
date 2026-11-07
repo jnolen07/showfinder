@@ -4,9 +4,10 @@ import TitleBrowser from './TitleBrowser.jsx'
 import OnboardingBar from './OnboardingBar.jsx'
 
 // Onboarding step 2: tell us what you've watched so recommendations fit your taste.
-export default function SeenStep({ library, onRate, onDone }) {
+export default function SeenStep({ library, onRate, onDone, genres, onGenres }) {
   const rated = Object.values(library).sort((a, b) => b.addedAt - a.addedAt)
   const positive = rated.filter((t) => RATINGS[t.rating].weight > 0).length
+  const ready = positive > 0 || genres.length > 0
 
   return (
     <div className="min-h-screen bg-[var(--bg)]">
@@ -15,11 +16,18 @@ export default function SeenStep({ library, onRate, onDone }) {
         <p className="eyebrow">Almost there</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">What have you watched?</h1>
         <p className="mt-2 max-w-2xl text-zinc-400">
-          Search shows and movies you've seen and tap <b className="text-zinc-200">Seen it?</b> to rate them. Rate at least a
-          few you loved — the more you add, the better your picks get.
+          Search for shows and movies you've seen, or pick genres you like to see popular ones. Tap{' '}
+          <b className="text-zinc-200">Seen it?</b> to rate what you've watched — the more you add, the better your picks get.
         </p>
         <div className="mt-6">
-          <TitleBrowser library={library} onRate={onRate} placeholder="Search something you've watched… e.g. Breaking Bad" />
+          <TitleBrowser
+            library={library}
+            onRate={onRate}
+            genres={genres}
+            onGenres={onGenres}
+            genreLabel="Pick genres you like — we’ll show popular ones you might have seen"
+            placeholder="Search something you've watched… e.g. Breaking Bad"
+          />
         </div>
       </div>
 
@@ -32,15 +40,17 @@ export default function SeenStep({ library, onRate, onDone }) {
               ) : null,
             )}
             <span className="whitespace-nowrap text-sm text-zinc-400">
-              {rated.length ? `${rated.length} rated` : 'Nothing rated yet'}
+              {[rated.length ? `${rated.length} rated` : null, genres.length ? `${genres.length} genre${genres.length === 1 ? '' : 's'}` : null]
+                .filter(Boolean)
+                .join(' · ') || 'Nothing picked yet'}
             </span>
           </div>
-          {!positive && (
+          {!ready && (
             <button onClick={onDone} className="text-sm text-zinc-500 hover:text-zinc-300">
               Skip
             </button>
           )}
-          <button className="btn-gold" disabled={!positive} onClick={onDone}>
+          <button className="btn-gold" disabled={!ready} onClick={onDone}>
             See my picks
           </button>
         </div>

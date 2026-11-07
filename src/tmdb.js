@@ -4,6 +4,7 @@
 const BASE = 'https://api.themoviedb.org/3'
 export const IMG = 'https://image.tmdb.org/t/p'
 import { serviceFor, serviceById } from './services.js'
+import { tmdbGenres } from './genres.js'
 
 // How the app reaches TMDB:
 //  'proxy'  – through /api/tmdb on our own server (normal; the key never reaches the browser)
@@ -125,6 +126,83 @@ export async function trending() {
 
 // Where a single title streams in a region.
 // Returns { included: [...providers], rent: [...], buy: [...], link }
+// Popular titles in the given genre buttons (movies and shows mixed), for browsing.
+export async function browseGenres(chipIds, page = 1) {
+  const lists = await Promise.all(
+    ['tv', 'movie'].map((type) => {
+      const ids = tmdbGenres(chipIds, type)
+      if (!ids.length) return Promise.resolve([])
+      return get(`/discover/${type}`, {
+        with_genres: ids.join('|'),
+        sort_by: 'popularity.desc',
+        'vote_count.gte': type === 'tv' ? 100 : 300,
+        include_adult: false,
+        page,
+      })
+        .then((d) => d.results.map((r) => normalize(r, type)))
+        .catch(() => [])
+    }),
+  )
+  return interleave(lists)
+}
+
+// Popular, well-rated titles in these genres that are on the user's services right now.
+export async function popularOnServices(chipIds, { region, serviceIds, exclude = new Set() }) {
+  const providerIds = providerIdsFor(serviceIds)
+  if (!providerIds.length) return []
+  const lists = await Promise.all(
+    ['tv', 'movie'].map((type) => {
+      const ids = tmdbGenres(chipIds, type)
+      if (chipIds.length && !ids.length) return Promise.resolve([])
+      return Promise.all(
+        [1, 2].map((page) =>
+          get(`/discover/${type}`, {
+            ...(ids.length ? { with_genres: ids.join('|') } : {}),
+            watch_region: region,
+            with_watch_providers: providerIds.join('|'),
+            with_watch_monetization_types: 'flatrate|free|ads',
+            sort_by: 'popularity.desc',
+            'vote_count.gte': type === 'tv' ? 150 : 500,
+            include_adult: false,
+            page,
+          }).catch(() => ({ results: [] })),
+        ),
+      ).then((pages) => pages.flatMap((d) => d.results.map((r) => normalize(r, type))))
+    }),
+  )
+  const items = interleave(lists)
+    .filter((t) => !exclude.has(`${t.type}:${t.id}`) && t.rating >= 6.5)
+    .slice(0, 36)
+  // Which of the user's services carry each one (cached lookups).
+  return Promise.all(
+    items.map(async (t) => {
+      try {
+        const where = await whereToWatch(t.type, t.id, region)
+        return { ...t, where, yourServices: myServicesFor(where, serviceIds) }
+      } catch {
+        return { ...t, where: { included: [] }, yourServices: [] }
+      }
+    }),
+  ).then((list) => list.filter((t) => t.yourServices.length))
+}
+
+// Alternate items from several lists, dropping duplicates.
+function interleave(lists) {
+  const out = []
+  const seen = new Set()
+  const max = Math.max(0, ...lists.map((l) => l.length))
+  for (let i = 0; i < max; i++) {
+    for (const l of lists) {
+      const t = l[i]
+      if (t && !seen.has(`${t.type}:${t.id}`)) {
+        seen.add(`${t.type}:${t.id}`)
+        out.push(t)
+      }
+    }
+  }
+  return out
+}
+
 export async function whereToWatch(type, id, region) {
   const data = await get(`/${type}/${id}/watch/providers`)
   return parseProviders(data, region)
@@ -320,7 +398,7 @@ function contentScore(cand, info, profile) {
 async function rank(profile, pool, { region, serviceIds, exclude, dislikedPool }) {
   // Pre-rank on collaborative signal, keep a healthy number of on-theme service matches too.
   const all = [...pool.values()].filter((e) => !exclude.has(keyOfT(e)) && e.votes >= 25)
-  const byCollab = all.filter((e) => e.collab > 0).sort((a, b) => b.collab - a.collab).slice(0, 60)
+  const byCollab = all.filter((e) => e.collab > 0).sort((a, b) => b.collab - a.collab).slice(0, 80)
   const themeOnly = all.filter((e) => e.collab === 0 && !e.sources.has('cross')).slice(0, 20)
   const crossOnly = all.filter((e) => e.collab === 0 && e.sources.has('cross')).sort((a, b) => b.hits - a.hits).slice(0, 30)
   const finalists = [...byCollab, ...themeOnly, ...crossOnly]
@@ -370,7 +448,7 @@ async function rank(profile, pool, { region, serviceIds, exclude, dislikedPool }
   for (const t of ['tv', 'movie']) {
     const ofType = ranked.filter((r) => r.type === t)
     const best = ofType[0]?.score || 0
-    keep.push(...ofType.filter((r) => r.score >= Math.max(1.5, best * 0.35)).slice(0, 40))
+    keep.push(...ofType.filter((r) => r.score >= Math.max(1.5, best * 0.25)).slice(0, 40))
   }
   keep.sort((a, b) => b.score - a.score)
   const cap = (list, n) => ['tv', 'movie'].flatMap((t) => list.filter((r) => r.type === t).slice(0, n)).sort((a, b) => b.score - a.score)
