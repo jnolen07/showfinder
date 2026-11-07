@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { connect, details, normalize } from './tmdb.js'
 import { guessRegion, load, save } from './storage.js'
 import { useLibrary } from './library.js'
+import { WatchlistContext, useWatchlistState } from './watchlist.js'
+import Watchlist from './components/Watchlist.jsx'
+import SharedTitle from './components/SharedTitle.jsx'
 import Landing from './components/Landing.jsx'
 import StaticPage from './components/StaticPage.jsx'
 import AppHeader from './components/AppHeader.jsx'
@@ -20,7 +23,8 @@ import { SERVICES } from './services.js'
 
 // Routes live in the URL hash so Back works and pages are shareable:
 //   #/          picks for you        #/search    search
-//   #/library   my shows             #/tv/1396   more like a title
+//   #/library   my shows             #/watchlist want to watch
+//   #/tv/1396   more like a title (or, for someone new, the shared-title page)
 //   #/welcome   landing page (#/welcome/faq jumps to a section)
 //   #/about, #/privacy               static pages
 function parseHash() {
@@ -33,6 +37,7 @@ function parseHash() {
   if (h.startsWith('#/privacy')) return { page: 'privacy' }
   if (h.startsWith('#/search')) return { page: 'search' }
   if (h.startsWith('#/library')) return { page: 'library' }
+  if (h.startsWith('#/watchlist')) return { page: 'watchlist' }
   return { page: 'home' }
 }
 const go = (hash) => {
@@ -40,7 +45,17 @@ const go = (hash) => {
 }
 
 export default function App() {
-  const [showIntro, setShowIntro] = useState(true)
+  const watchlist = useWatchlistState()
+  return (
+    <WatchlistContext.Provider value={watchlist}>
+      <Site watchlist={watchlist} />
+    </WatchlistContext.Provider>
+  )
+}
+
+function Site({ watchlist }) {
+  // A shared link (#/tv/123) skips the landing page and goes straight to that title.
+  const [showIntro, setShowIntro] = useState(() => parseHash().page !== 'title')
   const [serviceIds, setServiceIds] = useState(() => load('services', []).filter((id) => SERVICES.some((s) => s.id === id)))
   const [onboarded, setOnboarded] = useState(() => load('onboarded', false))
   const [editingServices, setEditingServices] = useState(false)
@@ -49,7 +64,12 @@ export default function App() {
   const [route, setRoute] = useState(parseHash)
   const [seed, setSeed] = useState(null)
   const [sheet, setSheet] = useState(null) // title whose details + where-to-watch are open
-  const { library, rate } = useLibrary()
+  const { library, rate: saveRating } = useLibrary()
+  // Rating something you've watched takes it off the watchlist.
+  const rate = (t, rating) => {
+    saveRating(t, rating)
+    if (rating) watchlist.remove(t)
+  }
 
   useEffect(() => {
     connect().then(setKeyOk)
@@ -84,6 +104,23 @@ export default function App() {
   if (route.page === 'about' || route.page === 'privacy') return <StaticPage page={route.page} />
 
   const setUp = serviceIds.length > 0 && onboarded
+  if (route.page === 'title' && !setUp && keyOk === null) {
+    return <div className="mx-auto mt-32 h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-amber-300" role="status" aria-label="Loading" />
+  }
+  if (route.page === 'title' && !setUp && keyOk) {
+    return (
+      <SharedTitle
+        type={route.type}
+        id={route.id}
+        region={region}
+        onStart={() => {
+          setShowIntro(false)
+          go('#/')
+          window.scrollTo({ top: 0 })
+        }}
+      />
+    )
+  }
   if (showIntro || route.page === 'welcome') {
     // null = nobody has set this device up yet, so no "Start fresh" link.
     const savedCount = serviceIds.length || Object.keys(library).length ? Object.keys(library).length : null
@@ -158,7 +195,13 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--bg)]">
-      <AppHeader page={route.page} libCount={libCount} serviceIds={serviceIds} onEditServices={() => setEditingServices(true)} />
+      <AppHeader
+        page={route.page}
+        libCount={libCount}
+        watchCount={watchlist.count}
+        serviceIds={serviceIds}
+        onEditServices={() => setEditingServices(true)}
+      />
 
       <div className="flex-1">
       {route.page === 'home' && (
@@ -175,6 +218,9 @@ export default function App() {
             <TitleBrowser library={library} onRate={rate} onSelect={openSheet} />
           </div>
         </main>
+      )}
+      {route.page === 'watchlist' && (
+        <Watchlist region={region} serviceIds={serviceIds} library={library} onRate={rate} onSelect={openSheet} goHome={() => go('#/')} />
       )}
       {route.page === 'library' && <MyShows library={library} onRate={rate} onSelect={openSheet} goSearch={() => go('#/search')} />}
       {route.page === 'title' &&

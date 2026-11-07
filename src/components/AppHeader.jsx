@@ -1,4 +1,4 @@
-import { Bookmark, Search, Sparkles } from 'lucide-react'
+import { Bookmark, Heart, Search, Sparkles } from 'lucide-react'
 import { serviceById } from '../services.js'
 import Logo from './Logo.jsx'
 import ResetButton from './ResetButton.jsx'
@@ -6,11 +6,13 @@ import ResetButton from './ResetButton.jsx'
 const TABS = [
   ['home', 'For you', '#/', Sparkles],
   ['search', 'Search', '#/search', Search],
-  ['library', 'My shows', '#/library', Bookmark],
+  ['watchlist', 'Watchlist', '#/watchlist', Bookmark],
+  ['library', 'My shows', '#/library', Heart],
 ]
 const go = (hash) => (window.location.hash = hash)
 
-export default function AppHeader({ page, libCount, serviceIds, onEditServices }) {
+export default function AppHeader({ page, libCount, watchCount, serviceIds, onEditServices }) {
+  const counts = { library: libCount, watchlist: watchCount }
   return (
     <>
       <header className="sticky top-0 z-30 border-b border-white/[.06] bg-black/80 backdrop-blur-md">
@@ -28,7 +30,7 @@ export default function AppHeader({ page, libCount, serviceIds, onEditServices }
               >
                 <Icon size={16} className={page === id ? 'text-amber-300' : ''} />
                 {label}
-                {id === 'library' && libCount > 0 && <Count n={libCount} />}
+                {counts[id] > 0 && <Count n={counts[id]} />}
                 {page === id && <span className="absolute inset-x-3 -bottom-[13px] h-0.5 rounded-full bg-amber-300" />}
               </button>
             ))}
@@ -45,7 +47,7 @@ export default function AppHeader({ page, libCount, serviceIds, onEditServices }
         aria-label="Main"
         className="fixed inset-x-0 bottom-0 z-30 border-t border-white/[.08] bg-black/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
       >
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-4">
           {TABS.map(([id, label, hash, Icon]) => (
             <button
               key={id}
@@ -55,9 +57,9 @@ export default function AppHeader({ page, libCount, serviceIds, onEditServices }
             >
               <span className="relative">
                 <Icon size={22} strokeWidth={page === id ? 2.2 : 1.8} />
-                {id === 'library' && libCount > 0 && (
+                {counts[id] > 0 && (
                   <span className="absolute -right-3 -top-1.5">
-                    <Count n={libCount} />
+                    <Count n={counts[id]} />
                   </span>
                 )}
               </span>

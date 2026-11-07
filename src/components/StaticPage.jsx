@@ -86,7 +86,7 @@ const PAGES = {
         'What’s stored, and where',
         <>
           <p>
-            The streaming services you pick and the titles you rate are saved in your browser’s local storage on this device. They
+            The streaming services you pick, the titles you rate and your watchlist are saved in your browser’s local storage on this device. They
             never leave your device except as part of the requests described below.
           </p>
           <p>To erase them, use Reset in the app (or “Start fresh” on the home page), or clear this site’s data in your browser.</p>
