@@ -54,14 +54,14 @@ the app makes, and caches answers on Vercel's CDN.
 
 1. **Get a free TMDB key**: sign up at themoviedb.org → Settings → API → request a key (personal
    use is fine). Either the *API Key* or the *API Read Access Token* works.
-2. **Deploy on Vercel**: import the repo with **Root Directory** `show-finder`, and add the
+2. **Deploy on Vercel**: import this repo (default settings — Vercel detects Vite), and add the
    environment variable **`TMDB_API_KEY`** (Settings → Environment Variables). Redeploy after adding
    or changing it. (An older `VITE_TMDB_API_KEY` variable is still read by the server function as a
    fallback, but rename it to `TMDB_API_KEY` when you can.)
 3. **Run locally** (needs Node.js):
 
    ```bash
-   cd show-finder
+   cd showfinder
    npm install
    npx vercel dev     # runs the site and /api/tmdb, reading TMDB_API_KEY from .env
    ```
