@@ -126,54 +126,57 @@ export async function trending() {
 
 // Where a single title streams in a region.
 // Returns { included: [...providers], rent: [...], buy: [...], link }
-// Popular titles in the given genre buttons (movies and shows mixed), for browsing.
+// Popular titles in the given genre buttons (movies and shows mixed), for browsing. Each genre is
+// fetched on its own and the lists are interleaved, so every picked genre shows up — otherwise the
+// most popular genre (usually crime or drama) crowds out the rest.
 export async function browseGenres(chipIds, page = 1) {
-  const lists = await Promise.all(
-    ['tv', 'movie'].map((type) => {
-      const ids = tmdbGenres(chipIds, type)
-      if (!ids.length) return Promise.resolve([])
-      return get(`/discover/${type}`, {
-        with_genres: ids.join('|'),
-        sort_by: 'popularity.desc',
-        'vote_count.gte': type === 'tv' ? 100 : 300,
-        include_adult: false,
-        page,
-      })
-        .then((d) => d.results.map((r) => normalize(r, type)))
-        .catch(() => [])
-    }),
+  const perGenre = await Promise.all(
+    chipIds.map(async (chip) =>
+      interleave(
+        await Promise.all(
+          ['tv', 'movie'].map((type) => {
+            const ids = tmdbGenres([chip], type)
+            if (!ids.length) return []
+            return get(`/discover/${type}`, {
+              with_genres: ids.join('|'),
+              sort_by: 'popularity.desc',
+              'vote_count.gte': type === 'tv' ? 100 : 300,
+              include_adult: false,
+              page,
+            })
+              .then((d) => d.results.map((r) => normalize(r, type)))
+              .catch(() => [])
+          }),
+        ),
+      ),
+    ),
   )
-  return interleave(lists)
+  return interleave(perGenre)
 }
 
-// Popular, well-rated titles in these genres that are on the user's services right now.
-export async function popularOnServices(chipIds, { region, serviceIds, exclude = new Set() }) {
-  const providerIds = providerIdsFor(serviceIds)
-  if (!providerIds.length) return []
-  const lists = await Promise.all(
-    ['tv', 'movie'].map((type) => {
-      const ids = tmdbGenres(chipIds, type)
-      if (chipIds.length && !ids.length) return Promise.resolve([])
-      return Promise.all(
-        [1, 2].map((page) =>
-          get(`/discover/${type}`, {
-            ...(ids.length ? { with_genres: ids.join('|') } : {}),
-            watch_region: region,
-            with_watch_providers: providerIds.join('|'),
-            with_watch_monetization_types: 'flatrate|free|ads',
-            sort_by: 'popularity.desc',
-            'vote_count.gte': type === 'tv' ? 150 : 500,
-            include_adult: false,
-            page,
-          }).catch(() => ({ results: [] })),
-        ),
-      ).then((pages) => pages.flatMap((d) => d.results.map((r) => normalize(r, type))))
-    }),
-  )
-  const items = interleave(lists)
-    .filter((t) => !exclude.has(`${t.type}:${t.id}`) && t.rating >= 6.5)
-    .slice(0, 36)
-  // Which of the user's services carry each one (cached lookups).
+// Popular, well-rated titles of one type in some TMDB genres, on the given streaming providers.
+// The rating floor is applied by TMDB, so every result counts (filtering afterwards left only a few,
+// because plenty of popular streaming movies score around 6).
+function discoverPopular(type, genreIds, { region, providerIds }) {
+  return Promise.all(
+    [1, 2, 3].map((page) =>
+      get(`/discover/${type}`, {
+        ...(genreIds.length ? { with_genres: genreIds.join('|') } : {}),
+        watch_region: region,
+        with_watch_providers: providerIds.join('|'),
+        with_watch_monetization_types: 'flatrate|free|ads',
+        sort_by: 'popularity.desc',
+        'vote_count.gte': type === 'tv' ? 100 : 300,
+        'vote_average.gte': 6.5,
+        include_adult: false,
+        page,
+      }).catch(() => ({ results: [] })),
+    ),
+  ).then((pages) => pages.flatMap((d) => d.results.map((r) => normalize(r, type))))
+}
+
+// Attach which of the user's services carry each title (cached lookups); keep those on them.
+function withYourServices(items, region, serviceIds) {
   return Promise.all(
     items.map(async (t) => {
       try {
@@ -184,6 +187,49 @@ export async function popularOnServices(chipIds, { region, serviceIds, exclude =
       }
     }),
   ).then((list) => list.filter((t) => t.yourServices.length))
+}
+
+/**
+ * Popular titles on the user's services, one list per genre button (or one general list when no
+ * genres are given). A title appears only under the first genre it matches.
+ * Resolves [{ genre, items }].
+ */
+export async function popularByGenre(chipIds, { region, serviceIds, exclude = new Set() }) {
+  const providerIds = providerIdsFor(serviceIds)
+  if (!providerIds.length) return []
+  const groups = chipIds.length ? chipIds.map((c) => [c]) : [[]]
+  const lists = await Promise.all(
+    groups.map(async (g) =>
+      interleave(
+        await Promise.all(
+          ['tv', 'movie'].map((type) => {
+            const ids = tmdbGenres(g, type)
+            if (g.length && !ids.length) return [] // e.g. TV has no Horror genre
+            return discoverPopular(type, ids, { region, providerIds })
+          }),
+        ),
+      ),
+    ),
+  )
+  const seen = new Set(exclude)
+  const trimmed = lists.map((list) =>
+    list
+      .filter((t) => {
+        const k = `${t.type}:${t.id}`
+        if (seen.has(k)) return false
+        seen.add(k)
+        return true
+      })
+      .slice(0, 30),
+  )
+  const filled = await Promise.all(trimmed.map((list) => withYourServices(list, region, serviceIds)))
+  return groups.map((g, i) => ({ genre: g[0] || null, items: filled[i] }))
+}
+
+/** Popular titles on the user's services across several genres, mixed fairly. */
+export async function popularOnServices(chipIds, opts) {
+  const groups = await popularByGenre(chipIds, opts)
+  return interleave(groups.map((g) => g.items))
 }
 
 // Alternate items from several lists, dropping duplicates.

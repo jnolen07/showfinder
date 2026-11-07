@@ -32,6 +32,7 @@ const ALLOWED_PARAMS = new Set([
   'with_genres',
   'sort_by',
   'vote_count.gte',
+  'vote_average.gte',
 ])
 const ALLOWED_APPENDS = new Set(['keywords', 'watch/providers'])
 
