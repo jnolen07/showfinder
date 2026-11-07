@@ -31,8 +31,8 @@ export default function ForYou({ library, onRate, region, serviceIds, onSelect, 
       alive = false
     }
   }, [seeds, region])
-  // Popular section uses the genres you picked, plus the top genres of what you loved.
-  const popularGenres = [...new Set([...genres, ...seedGenres.slice(0, genres.length ? 1 : 3)])].slice(0, 4)
+  // Picked genres get a section each; with none picked, mix the top genres of what you loved.
+  const popularGenres = genres.length ? genres : seedGenres.slice(0, 3)
 
   useEffect(() => {
     if (!seeds.length) return setState({ loading: false, onYours: [], elsewhere: [] })
@@ -128,6 +128,7 @@ export default function ForYou({ library, onRate, region, serviceIds, onSelect, 
       {(!seeds.length || !state.loading) && (
         <PopularOnServices
           genres={popularGenres}
+          perGenre={genres.length > 0}
           region={region}
           serviceIds={serviceIds}
           library={library}
