@@ -22,6 +22,11 @@ you pay for** first, so you don't have to sign up for anything new.
    voice remote, casting/AirPlay from the service's phone app, or searching on the TV. (A website
    can't control a TV directly.) Steps are tailored to your TV type, asked once (`SendToTv.jsx`).
 6. **Search** any title for "more like this", and **My shows** to see/change what you've rated.
+7. **Watchlist**: tap the bookmark on any poster (or "Want to watch" in a title's details) to save
+   it. The Watchlist tab shows what's on your services now; rating a title takes it off the list.
+8. **Share**: send a title to a friend (phone share sheet, or copy the link on a computer). The link
+   (`/#/tv/1396`) opens that title and where to watch it, even for someone who's never used
+   ShowFinder, with a "Get started" button.
    Rate anything from any page with **Seen it?** and it drops out of your recommendations.
 
 Everything you pick is saved in your browser — no account needed.

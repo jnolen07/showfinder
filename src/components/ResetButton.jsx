@@ -58,8 +58,8 @@ export default function ResetButton({ count, variant }) {
             </h2>
             <p className="mt-3 text-sm text-zinc-300">
               {forNewPerson
-                ? `This clears the last person's streaming services${count ? ` and the ${count} show${count === 1 ? '' : 's'} they rated` : ''}, so you can set up your own.`
-                : `This clears your streaming services${count ? ` and the ${count} show${count === 1 ? '' : 's'} you've rated` : ''}, then takes you back to the beginning.`}
+                ? `This clears the last person's streaming services, watchlist${count ? ` and the ${count} show${count === 1 ? '' : 's'} they rated` : ' and ratings'}, so you can set up your own.`
+                : `This clears your streaming services, watchlist${count ? ` and the ${count} show${count === 1 ? '' : 's'} you've rated` : ' and ratings'}, then takes you back to the beginning.`}
             </p>
             <p className="mt-1 text-xs text-zinc-500">Your TMDB key stays saved.</p>
             <div className="mt-6 flex justify-center gap-3">

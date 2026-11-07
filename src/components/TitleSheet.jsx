@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { IMG, titleInfo } from '../tmdb.js'
 import { RATINGS, keyOf } from '../library.js'
 import WhereToWatch from './WhereToWatch.jsx'
+import { ShareButton, WatchlistButton } from './TitleActions.jsx'
 import { ArrowRight, MessageSquare, X } from 'lucide-react'
 import { FEEDBACK_URL } from '../config.js'
 
@@ -99,9 +100,13 @@ export default function TitleSheet({ item, region, serviceIds, library, onRate, 
               </button>
             ))}
           </div>
-          <button className="btn-gold mt-5 w-full sm:w-auto" onClick={() => onMoreLike(t)}>
-            More like this <ArrowRight size={16} />
-          </button>
+          <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <button className="btn-gold w-full sm:w-auto" onClick={() => onMoreLike(t)}>
+              More like this <ArrowRight size={16} />
+            </button>
+            <WatchlistButton title={t} className="w-full sm:w-auto" />
+            <ShareButton title={t} where={info?.where} className="w-full sm:w-auto" />
+          </div>
         </div>
       </div>
     </div>,

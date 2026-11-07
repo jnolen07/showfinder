@@ -4,6 +4,7 @@ import { RATINGS } from '../library.js'
 import { ServiceBadges } from './ServiceLogo.jsx'
 import { Film, Star } from 'lucide-react'
 import { groupBrands } from '../brands.js'
+import { PosterBookmark } from './TitleActions.jsx'
 
 export function ProviderLogos({ providers: raw, max = 4 }) {
   if (!raw?.length) return null
@@ -60,6 +61,8 @@ export default function TitleCard({ title, onSelect, services, providers, rating
             )}
           </div>
         </button>
+
+        {!menu && <PosterBookmark title={title} />}
 
         {r && !menu && (
           <span className="pointer-events-none absolute left-2 top-2 rounded-full bg-black/80 px-2 py-0.5 text-xs">
