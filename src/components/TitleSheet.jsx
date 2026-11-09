@@ -39,7 +39,7 @@ export default function TitleSheet({ item, region, serviceIds, library, onRate, 
   ].filter(Boolean)
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/80 backdrop-blur-sm sm:items-center sm:p-6" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/80 backdrop-blur-sm sm:items-center sm:p-6" onClick={onClose}>
       <div
         role="dialog"
         aria-modal="true"
@@ -63,7 +63,7 @@ export default function TitleSheet({ item, region, serviceIds, library, onRate, 
           <div className="flex gap-4">
             {t.poster && <img src={`${IMG}/w185${t.poster}`} alt="" className="w-24 shrink-0 rounded-xl shadow-xl ring-1 ring-white/10 sm:w-28" />}
             <div className="min-w-0 self-end">
-              <h2 className="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">{t.title}</h2>
+              <h2 className="text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">{t.title}</h2>
               <p className="mt-1 text-sm text-zinc-400">{meta.join(' · ')}</p>
               {info?.genres?.length > 0 && <p className="mt-0.5 text-xs text-zinc-500">{info.genres.map((g) => g.name).join(' · ')}</p>}
             </div>
@@ -71,7 +71,7 @@ export default function TitleSheet({ item, region, serviceIds, library, onRate, 
 
           {t.overview && <p className="mt-4 text-sm leading-relaxed text-zinc-300">{t.overview}</p>}
 
-          <h3 className="mt-7 text-lg font-semibold">Where to watch</h3>
+          <h3 className="mt-7 text-lg font-bold">Where to watch</h3>
           <div className="mt-3">
             {error && <p className="text-sm text-red-300">{error}</p>}
             {!info && !error && <div className="h-28 animate-pulse rounded-xl bg-zinc-900" />}
@@ -94,7 +94,7 @@ export default function TitleSheet({ item, region, serviceIds, library, onRate, 
               <button
                 key={k}
                 onClick={() => onRate(t, rating === k ? null : k)}
-                className={`rounded-full border px-3 py-1.5 text-sm transition ${rating === k ? 'border-amber-300 bg-amber-300 text-black' : 'border-white/10 bg-white/[.03] hover:border-white/25'}`}
+                className={`rounded-full border px-3 py-1.5 text-sm transition ${rating === k ? 'border-pop bg-pop text-black' : 'border-white/10 bg-white/[.03] hover:border-white/25'}`}
               >
                 {r.emoji} {r.label}
               </button>

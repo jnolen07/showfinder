@@ -96,14 +96,14 @@ export default function TitleBrowser({ library, onRate, onSelect, placeholder, a
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder || 'Search any show or movie…'}
-          className="block w-full rounded-2xl border border-white/10 bg-[var(--surface)] py-4 pl-12 pr-5 text-lg outline-none transition placeholder:text-zinc-500 focus:border-amber-300/60 focus:shadow-[0_0_0_4px_rgba(227,183,74,.12)]"
+          className="block w-full rounded-2xl border border-white/10 bg-[var(--surface)] py-4 pl-12 pr-5 text-lg outline-none transition placeholder:text-zinc-500 focus:border-pop/60 focus:shadow-[0_0_0_4px_rgba(227,183,74,.12)]"
         />
       </div>
       <div className="mt-5">
         <GenreChips selected={picked} onChange={setPicked} label={genreLabel || 'Or browse by genre'} />
       </div>
       {error && <ErrorNote>{error}</ErrorNote>}
-      <h2 className="mt-10 text-xl font-semibold tracking-tight">{heading}</h2>
+      <h2 className="mt-10 text-xl font-extrabold tracking-tight">{heading}</h2>
       {searching && !loading && results.length === 0 && <p className="mt-2 text-zinc-400">Nothing found — try another spelling?</p>}
       {!searching && !error && (browsingGenres ? !byGenre.items : !popular) && <Skeleton />}
       <Grid>

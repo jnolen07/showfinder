@@ -31,7 +31,7 @@ export default function SharedTitle({ type, id, region, onStart }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--bg)]">
-      <header className="sticky top-0 z-30 border-b border-white/[.06] bg-black/80 backdrop-blur-md">
+      <header className="sticky top-0 z-30 border-b border-white/[.07] bg-ink/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4">
           <Logo onClick={onStart} />
           <button onClick={onStart} className="btn-gold btn-sm ml-auto">
@@ -50,7 +50,7 @@ export default function SharedTitle({ type, id, region, onStart }) {
               <p className="eyebrow">Shared with you</p>
               {info ? (
                 <>
-                  <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">{info.title}</h1>
+                  <h1 className="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">{info.title}</h1>
                   <p className="mt-1.5 text-sm text-zinc-400">{meta.join(' · ')}</p>
                   {info.genres?.length > 0 && <p className="mt-0.5 text-xs text-zinc-500">{info.genres.map((g) => g.name).join(' · ')}</p>}
                 </>
@@ -66,7 +66,7 @@ export default function SharedTitle({ type, id, region, onStart }) {
           {info?.overview && <p className="leading-relaxed text-zinc-300">{info.overview}</p>}
 
           <div className="card mt-8 p-5 sm:p-6">
-            <h2 className="text-lg font-semibold">Where to watch</h2>
+            <h2 className="text-lg font-extrabold">Where to watch</h2>
             <div className="mt-4">
               {info ? <WhereToWatch title={info} where={info.where} serviceIds={[]} /> : <div className="h-28 animate-pulse rounded-xl bg-white/[.04]" />}
             </div>
@@ -78,9 +78,9 @@ export default function SharedTitle({ type, id, region, onStart }) {
             </div>
           )}
 
-          <div className="relative mt-10 overflow-hidden rounded-3xl border border-amber-300/20 bg-gradient-to-b from-[#1a1508] to-[var(--surface)] px-6 py-10 text-center">
-            <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-[30rem] -translate-x-1/2 rounded-full bg-amber-300/10 blur-3xl" />
-            <h2 className="relative text-2xl font-semibold tracking-tight">
+          <div className="relative mt-10 overflow-hidden rounded-3xl border border-pop/20 bg-gradient-to-b from-[#1a1508] to-[var(--surface)] px-6 py-10 text-center">
+            <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-[30rem] -translate-x-1/2 rounded-full bg-pop/10 blur-3xl" />
+            <h2 className="relative text-2xl font-extrabold tracking-tight">
               {info ? `Liked ${info.title}? Find what to watch next.` : 'Find what to watch next.'}
             </h2>
             <p className="relative mx-auto mt-2 max-w-md text-sm text-zinc-400">

@@ -110,7 +110,7 @@ function Site({ watchlist }) {
 
   const setUp = serviceIds.length > 0 && onboarded
   if (route.page === 'title' && !setUp && keyOk === null) {
-    return <div className="mx-auto mt-32 h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-amber-300" role="status" aria-label="Loading" />
+    return <div className="mx-auto mt-32 h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-pop" role="status" aria-label="Loading" />
   }
   if (route.page === 'title' && !setUp && keyOk) {
     return (
@@ -131,6 +131,7 @@ function Site({ watchlist }) {
     const savedCount = serviceIds.length || Object.keys(library).length ? Object.keys(library).length : null
     return (
       <Landing
+        connected={keyOk}
         returning={setUp}
         savedCount={savedCount}
         section={route.page === 'welcome' ? route.section : null}
@@ -165,7 +166,7 @@ function Site({ watchlist }) {
     return (
       <div className="min-h-screen bg-[var(--bg)]">
         <OnboardingBar />
-        <div className="mx-auto mt-24 h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-amber-300" role="status" aria-label="Loading" />
+        <div className="mx-auto mt-24 h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-pop" role="status" aria-label="Loading" />
       </div>
     )
   }

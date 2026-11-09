@@ -25,7 +25,7 @@ export default function ResetButton({ count, variant }) {
   return (
     <>
       {forNewPerson ? (
-        <button onClick={() => setOpen(true)} className="fresh text-sm text-amber-100/70 underline-offset-4 hover:text-amber-100 hover:underline">
+        <button onClick={() => setOpen(true)} className="fresh text-sm text-pop-soft/70 underline-offset-4 hover:text-pop-soft hover:underline">
           New here? Start fresh
         </button>
       ) : (
@@ -43,7 +43,7 @@ export default function ResetButton({ count, variant }) {
       {open &&
         createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 px-4 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         >
           <div
@@ -53,7 +53,7 @@ export default function ResetButton({ count, variant }) {
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-sm rounded-2xl border border-white/10 bg-[var(--surface)] p-6 text-center shadow-2xl"
           >
-            <h2 id="reset-title" className="text-xl font-semibold">
+            <h2 id="reset-title" className="text-xl font-extrabold">
               {forNewPerson ? 'Start fresh?' : 'Start over?'}
             </h2>
             <p className="mt-3 text-sm text-zinc-300">

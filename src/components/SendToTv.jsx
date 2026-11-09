@@ -57,7 +57,7 @@ export default function SendToTv({ provider, serviceName, title, phoneLink, onCl
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/70 backdrop-blur-sm sm:items-center sm:p-6" onClick={onClose}>
+    <div className="fixed inset-0 z-[60] flex items-end justify-center bg-ink/70 backdrop-blur-sm sm:items-center sm:p-6" onClick={onClose}>
       <div
         role="dialog"
         aria-modal="true"
@@ -72,7 +72,7 @@ export default function SendToTv({ provider, serviceName, title, phoneLink, onCl
         {picking ? (
           <>
             <p className="eyebrow">Send to TV</p>
-            <h2 className="mt-2 pr-10 text-2xl font-semibold tracking-tight">What do you watch on?</h2>
+            <h2 className="mt-2 pr-10 text-2xl font-extrabold tracking-tight">What do you watch on?</h2>
             <p className="mt-1.5 text-sm text-zinc-400">We’ll remember this and show the quickest way for your TV.</p>
             <div className="mt-5 space-y-2">
               {TV_TYPES.map((t) => (
@@ -80,17 +80,17 @@ export default function SendToTv({ provider, serviceName, title, phoneLink, onCl
                   key={t.id}
                   onClick={() => choose(t.id)}
                   className={`flex w-full items-center gap-3 rounded-xl border p-3.5 text-left transition ${
-                    t.id === tvType ? 'border-amber-300/60 bg-amber-300/10' : 'border-white/[.08] bg-white/[.02] hover:border-white/25'
+                    t.id === tvType ? 'border-pop/60 bg-pop/10' : 'border-white/[.08] bg-white/[.02] hover:border-white/25'
                   }`}
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/[.06] text-amber-200">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/[.06] text-pop">
                     <Tv size={20} />
                   </span>
                   <span className="flex-1">
                     <span className="block font-medium">{t.name}</span>
                     <span className="block text-xs text-zinc-500">{t.hint}</span>
                   </span>
-                  {t.id === tvType && <Check size={18} className="text-amber-300" />}
+                  {t.id === tvType && <Check size={18} className="text-pop" />}
                 </button>
               ))}
             </div>
@@ -109,7 +109,7 @@ export default function SendToTv({ provider, serviceName, title, phoneLink, onCl
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/[.06] font-bold">{app[0]}</span>
               )}
               <div className="min-w-0">
-                <h2 className="truncate text-xl font-semibold tracking-tight">{title.title}</h2>
+                <h2 className="truncate text-xl font-extrabold tracking-tight">{title.title}</h2>
                 <p className="text-sm text-zinc-400">on {app}</p>
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function SendToTv({ provider, serviceName, title, phoneLink, onCl
               {tv.voice && (
                 <Way icon={Mic} label="Fastest" title={`Ask your remote`}>
                   Hold the {tv.voice === 'voice' ? 'microphone' : tv.voice} button on your {tv.name.split(' /')[0]} remote and say:
-                  <span className="mt-2 block rounded-lg border border-amber-300/30 bg-amber-300/[.08] px-3 py-2 text-base font-semibold text-amber-100">
+                  <span className="mt-2 block rounded-lg border border-pop/30 bg-pop/[.08] px-3 py-2 text-base font-semibold text-pop-soft">
                     “{phrase}”
                   </span>
                 </Way>
@@ -175,11 +175,11 @@ function Way({ icon: Icon, label, title, children }) {
   return (
     <li className="rounded-2xl border border-white/[.08] bg-white/[.02] p-4">
       <div className="flex items-center gap-2.5">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[.06] text-amber-200">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[.06] text-pop">
           <Icon size={17} />
         </span>
         <span className="font-semibold">{title}</span>
-        {label && <span className="ml-auto rounded-full bg-amber-300/15 px-2 py-0.5 text-[11px] font-semibold text-amber-200">{label}</span>}
+        {label && <span className="ml-auto rounded-full bg-pop/15 px-2 py-0.5 text-[11px] font-semibold text-pop">{label}</span>}
       </div>
       <div className="mt-2.5 text-sm leading-relaxed text-zinc-400">{children}</div>
     </li>
