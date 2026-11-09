@@ -104,9 +104,9 @@ function Section({ label, hint, items, link, note, highlight, onTv, sendToTv }) 
   if (!items.length) return null
   return (
     <section>
-      <h3 className={`text-xs font-semibold uppercase tracking-[.18em] ${highlight ? 'text-amber-200' : 'text-zinc-400'}`}>
+      <h3 className={`font-display text-[15px] font-bold ${highlight ? 'text-pop' : 'text-zinc-300'}`}>
         {label}
-        {hint && <span className="ml-2 font-normal normal-case tracking-normal text-zinc-500">{hint}</span>}
+        {hint && <span className="ml-2 font-sans text-xs font-normal text-zinc-500">{hint}</span>}
       </h3>
       <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {items.map((p) => (
@@ -117,7 +117,7 @@ function Section({ label, hint, items, link, note, highlight, onTv, sendToTv }) 
             onSendToTv={() => sendToTv(p)}
             className={`group flex items-center gap-3 rounded-xl border p-2.5 pr-3 transition ${
               highlight
-                ? 'border-amber-300/50 bg-amber-300/10 hover:border-amber-300 hover:bg-amber-300/15'
+                ? 'border-pop/50 bg-pop/10 hover:border-pop hover:bg-pop/15'
                 : 'border-zinc-800 bg-zinc-900/60 hover:border-zinc-600 hover:bg-zinc-900'
             }`}
           >
@@ -134,7 +134,7 @@ function Section({ label, hint, items, link, note, highlight, onTv, sendToTv }) 
               <span className="block truncate text-sm font-medium">{p.name}</span>
               {note && <span className="block text-xs text-zinc-500">{note(p)}</span>}
             </span>
-            <span className={`whitespace-nowrap text-xs font-semibold ${highlight ? 'text-amber-200' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
+            <span className={`whitespace-nowrap text-xs font-semibold ${highlight ? 'text-pop' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
               {onTv ? 'Send to TV' : 'Watch ↗'}
             </span>
           </Row>

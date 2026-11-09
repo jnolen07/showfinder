@@ -13,7 +13,7 @@ export default function KindFilter({ kind, setKind }) {
           aria-selected={kind === k}
           onClick={() => setKind(k)}
           className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-            kind === k ? 'bg-white text-black shadow' : 'text-zinc-400 hover:text-white'
+            kind === k ? 'bg-pop font-bold text-[#14100A]' : 'text-zinc-400 hover:text-white'
           }`}
         >
           {label}

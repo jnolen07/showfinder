@@ -41,8 +41,8 @@ export default function TitleCard({ title, onSelect, services, providers, rating
           title={onSelect ? `${title.title}: details & where to watch` : `Rate ${title.title}`}
         >
           <div
-            className={`relative aspect-[2/3] overflow-hidden rounded-xl bg-[var(--surface-2)] shadow-lg shadow-black/40 ring-1 transition duration-300 group-hover:shadow-xl group-hover:shadow-black/60 ${
-              r ? 'ring-2 ring-amber-300/70' : 'ring-white/[.08] group-hover:ring-white/20'
+            className={`relative aspect-[2/3] overflow-hidden rounded-2xl bg-[var(--surface-2)] shadow-lg shadow-black/40 ring-2 transition duration-300 group-hover:shadow-xl group-hover:shadow-black/60 ${
+              r ? 'ring-pop' : 'ring-transparent group-hover:ring-pop/70'
             }`}
           >
             {title.poster ? (
@@ -56,7 +56,7 @@ export default function TitleCard({ title, onSelect, services, providers, rating
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
             {title.rating > 0 && !r && (
               <span className="pointer-events-none absolute right-2 top-2 flex items-center gap-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[11px] font-semibold backdrop-blur">
-                <Star size={11} className="fill-amber-300 text-amber-300" /> {title.rating.toFixed(1)}
+                <Star size={11} className="fill-pop text-pop" /> {title.rating.toFixed(1)}
               </span>
             )}
           </div>
@@ -73,7 +73,7 @@ export default function TitleCard({ title, onSelect, services, providers, rating
         {onRate && !menu && (
           <button
             onClick={() => setMenu(true)}
-            className={`absolute bottom-2 right-2 rounded-full bg-black/80 px-2.5 py-1 text-xs font-medium backdrop-blur transition hover:bg-black ${
+            className={`absolute bottom-2 right-2 rounded-full bg-white px-2.5 py-1 text-xs font-bold text-[#14100A] shadow transition hover:bg-pop ${
               r ? 'sm:opacity-0 sm:group-hover:opacity-100' : ''
             }`}
           >
@@ -82,14 +82,14 @@ export default function TitleCard({ title, onSelect, services, providers, rating
         )}
 
         {menu && (
-          <div className="absolute inset-0 flex flex-col justify-center gap-2 rounded-xl bg-black/85 p-3 backdrop-blur-sm">
+          <div className="absolute inset-0 flex flex-col justify-center gap-2 rounded-2xl bg-ink/90 p-3 backdrop-blur-sm">
             <p className="mb-1 text-center text-xs text-zinc-300">How was it?</p>
             {Object.entries(RATINGS).map(([k, v]) => (
               <button
                 key={k}
                 onClick={() => choose(k)}
                 className={`rounded-full px-3 py-1.5 text-sm transition ${
-                  rating === k ? 'bg-amber-300 text-black' : 'bg-zinc-800 hover:bg-zinc-700'
+                  rating === k ? 'bg-pop text-black' : 'bg-zinc-800 hover:bg-zinc-700'
                 }`}
               >
                 {v.emoji} {v.label}
@@ -109,7 +109,7 @@ export default function TitleCard({ title, onSelect, services, providers, rating
         )}
       </div>
 
-      <div className="mt-2.5 line-clamp-2 text-sm font-medium leading-snug">{title.title}</div>
+      <div className="mt-2.5 line-clamp-2 text-[15px] font-semibold leading-snug">{title.title}</div>
       <div className="mt-0.5 text-xs text-zinc-500">
         {[title.year, title.type === 'tv' ? 'TV show' : 'Movie'].filter(Boolean).join(' · ')}
       </div>
@@ -140,7 +140,7 @@ export function Skeleton({ n = 12 }) {
   return (
     <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
       {Array.from({ length: n }).map((_, i) => (
-        <div key={i} className="aspect-[2/3] animate-pulse rounded-xl bg-zinc-900" />
+        <div key={i} className="aspect-[2/3] animate-pulse rounded-2xl bg-white/[.06]" />
       ))}
     </div>
   )

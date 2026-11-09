@@ -59,6 +59,7 @@ export default function PopularOnServices({ genres, perGenre, region, serviceIds
         g.genre ? `Popular ${genreById[g.genre].name} on your services` : title || 'Popular on your services'
       }
       hint={g.genre ? null : names.length ? `Hits in ${names.slice(0, 3).join(', ')}` : 'Top picks right now'}
+      color={g.genre ? genreById[g.genre].color : 'bg-cherry'}
       items={g.items.filter((t) => !library[keyOf(t)] && !exclude?.has(keyOf(t)) && (kind === 'all' || t.type === kind))}
       emptyNote={g.genre ? `Nothing popular in ${genreById[g.genre].name} on your services right now${kind !== 'all' ? ' for this filter' : ''}.` : null}
       onSelect={onSelect}
@@ -67,12 +68,12 @@ export default function PopularOnServices({ genres, perGenre, region, serviceIds
   ))
 }
 
-function GenreSection({ title, hint, items, emptyNote, onSelect, onRate }) {
+function GenreSection({ title, hint, color, items, emptyNote, onSelect, onRate }) {
   const [limit, setLimit] = useState(12)
   if (!items.length && !emptyNote) return null
   return (
     <section>
-      <SectionTitle title={title} count={items.length} hint={hint} />
+      <SectionTitle title={title} count={items.length} hint={hint} color={color} />
       {!items.length ? (
         <p className="mt-3 text-sm text-zinc-500">{emptyNote}</p>
       ) : (

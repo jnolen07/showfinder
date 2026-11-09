@@ -20,10 +20,10 @@ export default function GenreChips({ selected, onChange, label }) {
               key={g.id}
               onClick={() => toggle(g.id)}
               aria-pressed={active}
-              className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-sm font-medium transition ${
+              className={`flex shrink-0 items-center gap-1.5 rounded-full border-2 px-3.5 py-1.5 text-sm font-semibold transition ${
                 active
-                  ? 'border-amber-300 bg-amber-300 text-black'
-                  : 'border-white/10 bg-white/[.03] text-zinc-300 hover:border-white/25 hover:text-white'
+                  ? `border-transparent ${g.color} text-[#14100A] shadow-[0_3px_0_rgba(0,0,0,.35)]`
+                  : 'border-white/10 bg-white/[.04] text-zinc-200 hover:border-white/30 hover:text-white'
               }`}
             >
               {active ? <Check size={14} /> : <span aria-hidden>{g.emoji}</span>}

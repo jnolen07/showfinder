@@ -51,7 +51,7 @@ export default function Recommendations({ seed, region, serviceIds, library, onR
               <ArrowLeft size={16} /> Back
             </button>
             <p className="eyebrow mt-6">More like this</p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h1 className="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">
               {seed.title} {seed.year && <span className="text-2xl font-normal text-zinc-500">({seed.year})</span>}
             </h1>
             {state.seed?.genres?.length > 0 && <p className="mt-1 text-sm text-zinc-400">{state.seed.genres.map((g) => g.name).join(' · ')}</p>}
@@ -61,7 +61,7 @@ export default function Recommendations({ seed, region, serviceIds, library, onR
                 <button
                   key={k}
                   onClick={() => onRate(seed, seedRating === k ? null : k)}
-                  className={`rounded-full border px-3 py-1.5 text-sm transition ${seedRating === k ? 'border-amber-300 bg-amber-300 text-black' : 'border-white/10 bg-white/[.03] hover:border-white/25'}`}
+                  className={`rounded-full border px-3 py-1.5 text-sm transition ${seedRating === k ? 'border-pop bg-pop text-black' : 'border-white/10 bg-white/[.03] hover:border-white/25'}`}
                 >
                   {r.emoji} {r.label}
                 </button>

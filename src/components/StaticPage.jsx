@@ -17,12 +17,12 @@ export default function StaticPage({ page }) {
       </header>
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-14 sm:py-20">
         <p className="eyebrow">{content.eyebrow}</p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight">{content.title}</h1>
+        <h1 className="mt-3 text-4xl font-extrabold tracking-tight">{content.title}</h1>
         <p className="mt-2 text-sm text-zinc-500">{content.updated}</p>
         <div className="mt-10 space-y-8">
           {content.sections.map(([h, body]) => (
             <section key={h}>
-              <h2 className="text-lg font-semibold">{h}</h2>
+              <h2 className="text-lg font-extrabold">{h}</h2>
               <div className="mt-2 space-y-3 leading-relaxed text-zinc-400">{body}</div>
             </section>
           ))}
@@ -34,7 +34,7 @@ export default function StaticPage({ page }) {
 }
 
 const ext = (href, label) => (
-  <a href={href} target="_blank" rel="noopener noreferrer" className="text-amber-200 underline-offset-4 hover:underline">
+  <a href={href} target="_blank" rel="noopener noreferrer" className="text-pop underline-offset-4 hover:underline">
     {label}
   </a>
 )

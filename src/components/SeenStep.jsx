@@ -14,7 +14,7 @@ export default function SeenStep({ library, onRate, onDone, genres, onGenres }) 
       <OnboardingBar step={2} label="Your taste" />
       <div className="mx-auto max-w-6xl px-4 pb-40 pt-10 sm:pt-14">
         <p className="eyebrow">Almost there</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">What have you watched?</h1>
+        <h1 className="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">What have you watched?</h1>
         <p className="mt-2 max-w-2xl text-zinc-400">
           Search for shows and movies you've seen, or pick genres you like to see popular ones. Tap{' '}
           <b className="text-zinc-200">Seen it?</b> to rate what you've watched — the more you add, the better your picks get.
@@ -31,7 +31,7 @@ export default function SeenStep({ library, onRate, onDone, genres, onGenres }) 
         </div>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-white/[.08] bg-black/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md">
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-white/[.08] bg-ink/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
           <div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
             {rated.slice(0, 8).map((t) =>

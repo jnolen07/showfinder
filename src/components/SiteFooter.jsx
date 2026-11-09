@@ -26,7 +26,7 @@ export default function SiteFooter({ compact }) {
               </a>
             ))}
             {FEEDBACK_URL && (
-              <a href={FEEDBACK_URL} target="_blank" rel="noopener noreferrer" className="text-amber-200/80 transition hover:text-amber-100">
+              <a href={FEEDBACK_URL} target="_blank" rel="noopener noreferrer" className="text-pop/80 transition hover:text-pop-soft">
                 Send feedback ↗
               </a>
             )}
