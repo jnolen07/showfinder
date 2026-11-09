@@ -56,7 +56,7 @@ export default function TitleCard({ title, onSelect, services, providers, rating
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
             {title.rating > 0 && !r && (
               <span className="pointer-events-none absolute right-2 top-2 flex items-center gap-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[11px] font-semibold backdrop-blur">
-                <Star size={11} className="fill-pop text-pop" /> {title.rating.toFixed(1)}
+                <Star size={11} className="fill-sky text-sky" /> {title.rating.toFixed(1)}
               </span>
             )}
           </div>
@@ -89,7 +89,7 @@ export default function TitleCard({ title, onSelect, services, providers, rating
                 key={k}
                 onClick={() => choose(k)}
                 className={`rounded-full px-3 py-1.5 text-sm transition ${
-                  rating === k ? 'bg-pop text-black' : 'bg-zinc-800 hover:bg-zinc-700'
+                  rating === k ? 'bg-pop text-white' : 'bg-zinc-800 hover:bg-zinc-700'
                 }`}
               >
                 {v.emoji} {v.label}

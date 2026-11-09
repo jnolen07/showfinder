@@ -2,17 +2,17 @@
 // Romance genres), so each button maps to the right IDs per type.
 export const GENRES = [
   { id: 'comedy', name: 'Comedy', emoji: '😂', color: 'bg-pop', movie: [35], tv: [35] },
-  { id: 'action', name: 'Action', emoji: '💥', color: 'bg-cherry', movie: [28, 12], tv: [10759] },
-  { id: 'drama', name: 'Drama', emoji: '🎭', color: 'bg-grape', movie: [18], tv: [18] },
-  { id: 'crime', name: 'Crime', emoji: '🕵️', color: 'bg-sky', movie: [80], tv: [80] },
-  { id: 'scifi', name: 'Sci-Fi & Fantasy', emoji: '🚀', color: 'bg-mint', movie: [878, 14], tv: [10765] },
-  { id: 'thriller', name: 'Thriller', emoji: '🔪', color: 'bg-cherry', movie: [53], tv: [] },
-  { id: 'horror', name: 'Horror', emoji: '👻', color: 'bg-grape', movie: [27], tv: [] },
-  { id: 'romance', name: 'Romance', emoji: '💕', color: 'bg-cherry', movie: [10749], tv: [] },
-  { id: 'mystery', name: 'Mystery', emoji: '🔍', color: 'bg-sky', movie: [9648], tv: [9648] },
+  { id: 'action', name: 'Action', emoji: '💥', color: 'bg-pop', movie: [28, 12], tv: [10759] },
+  { id: 'drama', name: 'Drama', emoji: '🎭', color: 'bg-pop', movie: [18], tv: [18] },
+  { id: 'crime', name: 'Crime', emoji: '🕵️', color: 'bg-pop', movie: [80], tv: [80] },
+  { id: 'scifi', name: 'Sci-Fi & Fantasy', emoji: '🚀', color: 'bg-pop', movie: [878, 14], tv: [10765] },
+  { id: 'thriller', name: 'Thriller', emoji: '🔪', color: 'bg-pop', movie: [53], tv: [] },
+  { id: 'horror', name: 'Horror', emoji: '👻', color: 'bg-pop', movie: [27], tv: [] },
+  { id: 'romance', name: 'Romance', emoji: '💕', color: 'bg-pop', movie: [10749], tv: [] },
+  { id: 'mystery', name: 'Mystery', emoji: '🔍', color: 'bg-pop', movie: [9648], tv: [9648] },
   { id: 'animation', name: 'Animation', emoji: '🎨', color: 'bg-pop', movie: [16], tv: [16] },
-  { id: 'family', name: 'Family', emoji: '👨‍👩‍👧', color: 'bg-mint', movie: [10751], tv: [10751, 10762] },
-  { id: 'documentary', name: 'Documentary', emoji: '🎥', color: 'bg-sky', movie: [99], tv: [99] },
+  { id: 'family', name: 'Family', emoji: '👨‍👩‍👧', color: 'bg-pop', movie: [10751], tv: [10751, 10762] },
+  { id: 'documentary', name: 'Documentary', emoji: '🎥', color: 'bg-pop', movie: [99], tv: [99] },
   { id: 'reality', name: 'Reality', emoji: '📺', color: 'bg-pop', movie: [], tv: [10764] },
 ]
 

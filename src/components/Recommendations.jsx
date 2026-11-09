@@ -61,7 +61,7 @@ export default function Recommendations({ seed, region, serviceIds, library, onR
                 <button
                   key={k}
                   onClick={() => onRate(seed, seedRating === k ? null : k)}
-                  className={`rounded-full border px-3 py-1.5 text-sm transition ${seedRating === k ? 'border-pop bg-pop text-black' : 'border-white/10 bg-white/[.03] hover:border-white/25'}`}
+                  className={`rounded-full border px-3 py-1.5 text-sm transition ${seedRating === k ? 'border-pop bg-pop text-white' : 'border-white/10 bg-white/[.03] hover:border-white/25'}`}
                 >
                   {r.emoji} {r.label}
                 </button>

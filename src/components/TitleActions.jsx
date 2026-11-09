@@ -60,7 +60,7 @@ export function PosterBookmark({ title }) {
       aria-label={saved ? `Remove ${title.title} from watchlist` : `Add ${title.title} to watchlist`}
       title={saved ? 'On your watchlist' : 'Want to watch'}
       className={`absolute bottom-2 left-2 flex h-8 w-8 items-center justify-center rounded-full backdrop-blur transition ${
-        saved ? 'bg-pop text-black' : 'bg-black/75 text-white hover:bg-black sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100'
+        saved ? 'bg-pop text-white' : 'bg-black/75 text-white hover:bg-black sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100'
       }`}
     >
       {saved ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}

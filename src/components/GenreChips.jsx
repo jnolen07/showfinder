@@ -22,7 +22,7 @@ export default function GenreChips({ selected, onChange, label }) {
               aria-pressed={active}
               className={`flex shrink-0 items-center gap-1.5 rounded-full border-2 px-3.5 py-1.5 text-sm font-semibold transition ${
                 active
-                  ? `border-transparent ${g.color} text-[#14100A] shadow-[0_3px_0_rgba(0,0,0,.35)]`
+                  ? `border-transparent ${g.color} text-white shadow-[0_3px_0_#8E0F1C]`
                   : 'border-white/10 bg-white/[.04] text-zinc-200 hover:border-white/30 hover:text-white'
               }`}
             >

@@ -38,7 +38,7 @@ export default function ServicePicker({ selected, onSave, onCancel, firstRun }) 
                 >
                   <ServiceLogo service={s} />
                   {on && (
-                    <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-pop text-sm font-bold text-black shadow">
+                    <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-pop text-sm font-bold text-white shadow">
                       ✓
                     </span>
                   )}
