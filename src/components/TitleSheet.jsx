@@ -94,7 +94,7 @@ export default function TitleSheet({ item, region, serviceIds, library, onRate, 
               <button
                 key={k}
                 onClick={() => onRate(t, rating === k ? null : k)}
-                className={`rounded-full border px-3 py-1.5 text-sm transition ${rating === k ? 'border-pop bg-pop text-black' : 'border-white/10 bg-white/[.03] hover:border-white/25'}`}
+                className={`rounded-full border px-3 py-1.5 text-sm transition ${rating === k ? 'border-pop bg-pop text-white' : 'border-white/10 bg-white/[.03] hover:border-white/25'}`}
               >
                 {r.emoji} {r.label}
               </button>

@@ -4,13 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Movie-night palette
-        pop: { DEFAULT: '#FFD23F', soft: '#FFE68A', deep: '#C99700' }, // popcorn yellow
-        cherry: { DEFAULT: '#FF4D7A', deep: '#C8235A' },
-        sky: { DEFAULT: '#45C4F5', deep: '#1F8FC4' },
-        grape: { DEFAULT: '#9B7BFF', deep: '#6A48E0' },
-        mint: { DEFAULT: '#2EE6A8', deep: '#14A97A' },
-        ink: { DEFAULT: '#0E0B1F', surface: '#18132F', raised: '#231C44' },
+        // Movie-theater palette: black, theater red, velvet red, marquee cream
+        pop: { DEFAULT: '#E0283A', soft: '#FF7380', deep: '#8E0F1C' }, // theater red (main accent)
+        cherry: { DEFAULT: '#9B1020', deep: '#5E0812' }, // velvet curtain red
+        sky: { DEFAULT: '#F3E9D2', deep: '#C9B993' }, // marquee cream
+        grape: { DEFAULT: '#2A2427', deep: '#1A1618' }, // charcoal
+        mint: { DEFAULT: '#6E1420', deep: '#45080F' }, // maroon
+        ink: { DEFAULT: '#0A0A0B', surface: '#141214', raised: '#1E1A1D' },
       },
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],

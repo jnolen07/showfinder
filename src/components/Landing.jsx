@@ -112,13 +112,13 @@ export default function Landing({ onStart, returning, savedCount, section, conne
           <SectionHeading eyebrow="How it works" title="Three steps to your next favorite show" />
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {[
-              ['bg-pop', 'Pick your services', 'Netflix, HBO Max, Hulu and more — tap the ones you already pay for.', '📺'],
-              ['bg-cherry', 'Tell us what you like', 'Rate shows you’ve watched, or just tap genres like Comedy or Horror.', '❤️'],
-              ['bg-sky', 'Watch something great', 'Get picks you’ll actually like, with what’s on your services first.', '🍿'],
+              ['bg-pop text-white', 'Pick your services', 'Netflix, HBO Max, Hulu and more — tap the ones you already pay for.', '📺'],
+              ['bg-sky text-[#1A0A0D]', 'Tell us what you like', 'Rate shows you’ve watched, or just tap genres like Comedy or Horror.', '❤️'],
+              ['bg-cherry text-white', 'Watch something great', 'Get picks you’ll actually like, with what’s on your services first.', '🍿'],
             ].map(([bg, title, body, emoji], i) => (
-              <div key={title} className={`relative rounded-3xl ${bg} p-6 text-[#14100A] shadow-[0_6px_0_rgba(0,0,0,.35)] sm:p-7`}>
+              <div key={title} className={`relative rounded-3xl ${bg} p-6 shadow-[0_6px_0_rgba(0,0,0,.45)] sm:p-7`}>
                 <div className="flex items-center justify-between">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#14100A] font-display text-lg font-extrabold text-white">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#0A0A0B] font-display text-lg font-extrabold text-white">
                     {i + 1}
                   </span>
                   <span className="text-3xl" aria-hidden>
@@ -126,7 +126,7 @@ export default function Landing({ onStart, returning, savedCount, section, conne
                   </span>
                 </div>
                 <h3 className="mt-6 text-2xl font-extrabold">{title}</h3>
-                <p className="mt-2 text-[15px] font-medium leading-relaxed text-black/75">{body}</p>
+                <p className="mt-2 text-[15px] font-medium leading-relaxed opacity-80">{body}</p>
               </div>
             ))}
           </div>
@@ -157,13 +157,13 @@ export default function Landing({ onStart, returning, savedCount, section, conne
             <SectionHeading align="left" eyebrow="Why ShowFinder" title="Recommendations that actually fit" />
             <ul className="mt-8 space-y-6">
               {[
-                [Wand2, 'bg-pop', 'Picks that match your taste', 'Built from what fans of your favorites also loved, plus shared themes — not just “it’s also a drama.”'],
-                [Tv, 'bg-cherry', 'Only what you can watch', 'Titles on your services come first, so you never sign up for something new to watch one show.'],
-                [MousePointerClick, 'bg-sky', 'One tap to start watching', 'See where a title streams, where it’s free, and where to rent it — then jump straight there, or send it to your TV.'],
-                [Lock, 'bg-mint', 'Private by default', 'No account, no sign-up. Your services and ratings stay in your browser.'],
+                [Wand2, 'bg-pop text-white', 'Picks that match your taste', 'Built from what fans of your favorites also loved, plus shared themes — not just “it’s also a drama.”'],
+                [Tv, 'bg-cherry text-white', 'Only what you can watch', 'Titles on your services come first, so you never sign up for something new to watch one show.'],
+                [MousePointerClick, 'bg-sky text-[#1A0A0D]', 'One tap to start watching', 'See where a title streams, where it’s free, and where to rent it — then jump straight there, or send it to your TV.'],
+                [Lock, 'bg-white/10 text-white', 'Private by default', 'No account, no sign-up. Your services and ratings stay in your browser.'],
               ].map(([Icon, bg, title, body]) => (
                 <li key={title} className="flex gap-4">
-                  <span className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${bg} text-[#14100A]`}>
+                  <span className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${bg}`}>
                     <Icon size={19} strokeWidth={2.4} />
                   </span>
                   <div>
@@ -198,15 +198,15 @@ export default function Landing({ onStart, returning, savedCount, section, conne
 
       {/* Final CTA */}
       <section className="px-4 py-16 sm:py-24">
-        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-pop px-6 py-14 text-center text-[#14100A] sm:py-16">
+        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-pop px-6 py-14 text-center text-white shadow-[0_8px_0_#8E0F1C] sm:py-16">
           <span className="pointer-events-none absolute -left-6 -top-6 h-24 w-24 rounded-full bg-cherry" />
-          <span className="pointer-events-none absolute -bottom-8 -right-4 h-28 w-28 rounded-full bg-sky" />
+          <span className="pointer-events-none absolute -bottom-8 -right-4 h-28 w-28 rounded-full bg-black/30" />
           <h2 className="relative text-4xl sm:text-5xl">Ready for your next binge?</h2>
-          <p className="relative mx-auto mt-3 max-w-md text-[17px] font-medium text-black/70">
+          <p className="relative mx-auto mt-3 max-w-md text-[17px] font-medium text-white/85">
             About a minute to set up. No account, no credit card.
           </p>
           <button
-            className="relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-[#14100A] px-7 py-3.5 text-base font-bold text-white shadow-[0_4px_0_rgba(0,0,0,.35)] transition hover:-translate-y-0.5 active:translate-y-0.5"
+            className="relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-[#0A0A0B] px-7 py-3.5 text-base font-bold text-white shadow-[0_4px_0_rgba(0,0,0,.35)] transition hover:-translate-y-0.5 active:translate-y-0.5"
             onClick={onStart}
           >
             {cta} <ArrowRight size={18} />
@@ -282,11 +282,11 @@ function ProductPreview() {
   ]
   return (
     <div className="relative mx-auto w-full max-w-md">
-      <div className="pointer-events-none absolute -right-3 -top-3 h-full w-full rounded-3xl bg-cherry" />
+      <div className="pointer-events-none absolute -right-3 -top-3 h-full w-full rounded-3xl bg-pop" />
       <div className="relative overflow-hidden rounded-3xl border-2 border-white/10 bg-ink-surface shadow-2xl">
         <div className="flex gap-4 p-5">
           <div className="flex aspect-[2/3] w-24 shrink-0 items-end rounded-xl bg-gradient-to-br from-pop via-cherry to-grape p-2 ring-1 ring-white/10">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-black/80">Better Call Saul</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-white/90">Better Call Saul</span>
           </div>
           <div className="min-w-0">
             <p className="eyebrow !text-[10px]">Because you liked Breaking Bad</p>
